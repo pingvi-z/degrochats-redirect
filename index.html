@@ -1,52 +1,24 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Переход в DegroChats</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            font-family: sans-serif;
-            text-align: center;
-            margin-top: 50px;
-            color: #333;
-        }
-        #message {
-            display: none;
-            margin-top: 20px;
-        }
-        a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-    </style>
-</head>
-<body>
-    <h1>Переход в DegroChats...</h1>
-    <p id="message">
-        Приложение DegroChats не установлено.<br>
-        <a href="https://www.rustore.ru/catalog/app/com.degrochats.pingvi" target="_blank">Установить в RuStore</a>
-    </p>
-
-    <script>
+    <title>Redirect to DegroChats Profile</title>
+    <script type="text/javascript">
+        // Параметр 'r' в URL содержит твою кастомную ссылку
         const urlParams = new URLSearchParams(window.location.search);
-        const uid = urlParams.get('uid');
+        const targetUrl = urlParams.get('r');
 
-        if(uid){
-            // Создаём iframe для открытия приложения
-            const iframe = document.createElement('iframe');
-            iframe.style.display = 'none';
-            iframe.src = 'degrochats://user/' + uid;
-            document.body.appendChild(iframe);
-
-            // Через 2 секунды показываем fallback, если приложение не открылось
-            setTimeout(() => {
-                document.getElementById('message').style.display = 'block';
-            }, 2000);
+        // Если ссылка получена, пытаемся открыть приложение
+        if (targetUrl) {
+            window.location.href = targetUrl;
         } else {
-            document.getElementById('message').innerText = 'UID не указан в ссылке.';
-            document.getElementById('message').style.display = 'block';
+            // Если параметра нет, можно сделать редирект по умолчанию
+            document.body.innerHTML = '<p>Ссылка на профиль не указана.</p>';
         }
     </script>
+</head>
+<body>
+    <noscript>
+        <p>Для перенаправления требуется JavaScript. Если приложение не открылось, <a href="#" id="fallbackLink">нажмите сюда</a>.</p>
+    </noscript>
 </body>
 </html>
